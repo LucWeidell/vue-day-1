@@ -69,10 +69,10 @@ export default {
             }
           })
           return dead
-        })
+        }),
 
         // NOTE two way data binding with a Form element
-
+        newTarget: {}
     })
    // const target = {
     //   role: 'Instructor',
@@ -86,6 +86,11 @@ export default {
           target.health = 0
         }
         // draw()
+      },
+      addTarget(){
+        this.newTarget.maxHealth = state.target.health
+        state.target.push(state.newTarget)
+        this.newTarget = {}
       },
       state
       //target moved
