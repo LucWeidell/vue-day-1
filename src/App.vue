@@ -13,14 +13,15 @@
     :key is the property on that object that can be used to uniquely identify it -->
     <div class='col-md-4' v-for="t in state.targets" :key="t.id">
       <!-- //No longer state.target.name / health -->
-      <h1 v-if="t.health >1"> {(t.role)}</h3>
+      <h1 v-if="t.health < 1">{{t.role}}</h1>
       <h3 v-else> Unconsious</h3>
       <!-- FIXME  -->
-      <h1: class="{text-danger: {(t.health)} "<h1>
+      <h1 :class="{'text-danger': t.health < 1, strickthrough: t.health < 10 }"> {{ t.name }} - {{t.health}} <h1>
       <button :disabled="t.health < 1" class ="btn btn-primary" @click ="attack( 'slap', 1, t)">Slap </button>
-      <button :disabled="t.health < 1" class ="btn btn-primary" @click ="attack( 'kick', 2, t)">Kick </button>
-      <button :disabled="t.health < 1" class ="btn btn-primary" @click ="attack( 'punch', 3, t)">Punch </button>
+      <button :disabled="t.health < 1" class ="btn btn-warning" @click ="attack( 'kick', 2, t)">Kick </button>
+      <button :disabled="t.health < 1" class ="btn btn-danger" @click ="attack( 'punch', 3, t)">Punch </button>
 
+      <button v-show="t.health < 1" class ="btn btn-info" @click="t.health = t.maxHealth" >defib</button>
       <!--NOTE cool if
        <button v-if="t.health < 1" class ="btn btn-info" @click="t.health = t.maxHealth" >defib</button> -->
     </div>
@@ -84,7 +85,7 @@ export default {
         target.health -= val
         if(target.health < 0) {
           target.health = 0
-        }
+        }--
         // draw()
       },
       addTarget(){
